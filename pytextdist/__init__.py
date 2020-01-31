@@ -8,6 +8,8 @@ __version__ = "0.0.2"
 
 import importlib
 
+from . import preprocessing 
+importlib.reload(preprocessing)
 from . import input_validator
 importlib.reload(input_validator)
 from . import edit_distance 

@@ -6,56 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .input_validator import input_validator
-
-def word_preprocessing(word, ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
-	"""
-	Function for word preprocessing
-	|
-	| Argument
-	| | word: a string to be processed 
-	|
-	| Parameter
-	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
-	| | ignore_numeric: whether to remove all numeric characters
-	| | ignore_case: whether to convert all alpha characters to lower case
-	|
-	| Output
-	| | processed string (type: str)
-	"""
-	if ignore_non_alnumspc: word = "".join(filter(lambda x: x.isalnum() or x.isspace(), word))
-	if ignore_space: word = "".join(filter(lambda x: not x.isspace(), word))
-	if ignore_numeric: word = "".join(filter(lambda x: not x.isnumeric(), word))
-	if ignore_case: word = word.lower()
-	return word
-
-def sentence_preprocessing(sentence, ignore_non_alnumspc=True, ignore_numeric=True, ignore_case=True):
-	"""
-	Function for sentence preprocessing
-	|
-	| Argument
-	| | sentence: a string to be processed
-	|
-	| Parameter
-	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_numeric: whether to remove all numeric characters
-	| | ignore_case: whether to convert all alpha characters to lower case
-	|
-	| Output
-	| | list of strings (type: list[str])
-	"""
-	l_words = sentence.split()
-	l_words = list(
-		filter(lambda x: x!="", 
-			map(lambda x: word_preprocessing(x, 
-				ignore_non_alnumspc=ignore_non_alnumspc, 
-				ignore_numeric=ignore_numeric, 
-				ignore_case=ignore_case,
-				ignore_space=False), l_words
-			)
-		)
-	)
-	return l_words
+from .preprocessing import word_preprocessing, sentence_preprocessing
 
 @input_validator(str, str)
 def levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
@@ -96,7 +47,7 @@ def levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=T
 	for row in range(len_1+1): manipulation[row][0] = row
 	for col in range(len_2+1): manipulation[0][col] = col
 
-	# Allowed edit: insert, delete
+	# Allowed edit: insert, delete, substitute
 	for i in range(1,len_1+1):
 		for j in range(1, len_2+1):
 			cost = 1 if l_1[i-1] != l_2[j-1] else 0
@@ -146,13 +97,110 @@ def levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc
 	for row in range(len_1+1): manipulation[row][0] = row
 	for col in range(len_2+1): manipulation[0][col] = col
 
-	# Allowed edit: insert, delete
+	# Allowed edit: insert, delete, substitute
 	for i in range(1,len_1+1):
 		for j in range(1, len_2+1):
 			cost = 1 if l_1[i-1] != l_2[j-1] else 0
 			manipulation[i][j] = min(manipulation[i-1][j-1]+cost, manipulation[i-1][j]+1, manipulation[i][j-1]+1)
 
 	similarity = 1 - manipulation[-1][-1]/max(len_1,len_2)
+
+	return similarity
+
+@input_validator(str, str)
+def lcs_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+	"""
+	Get Longest common subsequence distance between two text phrases
+	|
+	| Argument
+	| | phrase_1, phrase_2: text phrases to compare
+	|
+	| Parameter
+	| | grain: "char" or "word", grain for edit
+	|
+	| Parameter for preprocessing
+	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
+	| | ignore_space: whether to remove all spaces
+	| | ignore_numeric: whether to remove all numeric characters
+	| | ignore_case: whether to convert all alpha characters to lower case
+	|
+	| Output
+	| | distance (type: int)
+	"""
+	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
+
+	# Preprocess text phrase into list of edit units
+	if grain == "char":
+		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	else:
+		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	len_1, len_2 = len(l_1), len(l_2)
+
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+
+	# Dynamic programming solver
+	manipulation = [[0 for _ in range(len_2+1)] for _ in range(len_1+1)]
+	for row in range(len_1+1): manipulation[row][0] = 0
+	for col in range(len_2+1): manipulation[0][col] = 0
+
+	# Allowed edit: insert, delete
+	for i in range(1,len_1+1):
+		for j in range(1, len_2+1):
+			manipulation[i][j] = manipulation[i-1][j-1] + 1 if l_1[i-1] == l_2[j-1] else max(manipulation[i][j-1], manipulation[i-1][j])
+
+	return manipulation[-1][-1]
+
+@input_validator(str, str)
+def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+	"""
+	Get longest common subsequence similarity between two text phrases
+	|
+	| Formula
+	| | longest common subsequence / longest length among two
+	|
+	| Argument
+	| | phrase_1, phrase_2: text phrases to compare
+	|
+	| Parameter
+	| | grain: "char" or "word", grain for edit
+	|
+	| Parameter for preprocessing
+	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
+	| | ignore_space: whether to remove all spaces
+	| | ignore_numeric: whether to remove all numeric characters
+	| | ignore_case: whether to convert all alpha characters to lower case
+	|
+	| Output
+	| | distance (type: int)
+	"""
+	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
+
+	# Preprocess text phrase into list of edit units
+	if grain == "char":
+		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	else:
+		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	len_1, len_2 = len(l_1), len(l_2)
+
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+
+	# Dynamic programming solver
+	manipulation = [[0 for _ in range(len_2+1)] for _ in range(len_1+1)]
+	for row in range(len_1+1): manipulation[row][0] = 0
+	for col in range(len_2+1): manipulation[0][col] = 0
+
+	# Allowed edit: insert, delete
+	for i in range(1,len_1+1):
+		for j in range(1, len_2+1):
+			manipulation[i][j] = manipulation[i-1][j-1] + 1 if l_1[i-1] == l_2[j-1] else max(manipulation[i][j-1], manipulation[i-1][j])
+
+	similarity = manipulation[-1][-1]/max(len_1,len_2)
 
 	return similarity
 
@@ -195,7 +243,7 @@ def damerau_levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_al
 	for row in range(len_1+1): manipulation[row][0] = row
 	for col in range(len_2+1): manipulation[0][col] = col
 
-	# Allowed edit: insert, delete, swap
+	# Allowed edit: insert, delete, substitute, transpose of adjacent characters
 	for i in range(1,len_1+1):
 		for j in range(1, len_2+1):
 			cost_1 = 1 if l_1[i-1] != l_2[j-1] else 0
@@ -249,7 +297,7 @@ def damerau_levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_
 	for row in range(len_1+1): manipulation[row][0] = row
 	for col in range(len_2+1): manipulation[0][col] = col
 
-	# Allowed edit: insert, delete, swap
+	# Allowed edit: insert, delete, substitute, transpose of adjacent characters
 	for i in range(1,len_1+1):
 		for j in range(1, len_2+1):
 			cost_1 = 1 if l_1[i-1] != l_2[j-1] else 0
@@ -388,21 +436,3 @@ def jaro_winkler_similarity(phrase_1, phrase_2, p=0.1, grain="char", ignore_non_
 	similarity = jaro_similarity + l_common_prefix*p*(1-jaro_similarity)
 
 	return similarity
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
