@@ -47,7 +47,11 @@ handlers:
   #   encoding: utf8
 
 loggers:
-  pytextdist.levenshtein:
+  pytextdist.edit_distance:
+    level: INFO
+    handlers: [brief_console]
+    propagate: no 
+  pytextdist.input_validator:
     level: INFO
     handlers: [brief_console]
     propagate: no 

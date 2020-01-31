@@ -4,9 +4,15 @@ import logging.config
 import yaml
 
 __name__ = "pytextdist"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
-from .levenshtein import levenshtein_distance, levenshtein_similarity
+import importlib
+
+from . import input_validator
+importlib.reload(input_validator)
+from . import edit_distance 
+importlib.reload(edit_distance)
+
 
 """
 Set up logging
