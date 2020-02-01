@@ -151,7 +151,9 @@ def lcs_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ign
 		for j in range(1, len_2+1):
 			manipulation[i][j] = manipulation[i-1][j-1] + 1 if l_1[i-1] == l_2[j-1] else max(manipulation[i][j-1], manipulation[i-1][j])
 
-	return manipulation[-1][-1]
+	distance = len_1 + len_2 - 2 * manipulation[-1][-1]
+
+	return distance
 
 @input_validator(str, str)
 def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
@@ -159,7 +161,7 @@ def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, i
 	Get longest common subsequence similarity between two text phrases
 	|
 	| Formula
-	| | longest common subsequence / longest length among two
+	| | 1 - (longest common subsequence / sum of lengths)
 	|
 	| Argument
 	| | phrase_1, phrase_2: text phrases to compare
@@ -200,7 +202,9 @@ def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, i
 		for j in range(1, len_2+1):
 			manipulation[i][j] = manipulation[i-1][j-1] + 1 if l_1[i-1] == l_2[j-1] else max(manipulation[i][j-1], manipulation[i-1][j])
 
-	similarity = manipulation[-1][-1]/max(len_1,len_2)
+	distance = len_1 + len_2 - 2 * manipulation[-1][-1]
+
+	similarity = 1 - distance/(len_1+len_2)
 
 	return similarity
 
@@ -434,5 +438,96 @@ def jaro_winkler_similarity(phrase_1, phrase_2, p=0.1, grain="char", ignore_non_
 		index += 1
 
 	similarity = jaro_similarity + l_common_prefix*p*(1-jaro_similarity)
+
+	return similarity
+
+@input_validator(str, str)
+def hamming_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+	"""
+	Get Hamming distance between two text phrases
+	|
+	| Argument
+	| | phrase_1, phrase_2: text phrases to compare
+	|
+	| Parameter
+	| | grain: "char" or "word", grain for edit
+	|
+	| Parameter for preprocessing
+	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
+	| | ignore_space: whether to remove all spaces
+	| | ignore_numeric: whether to remove all numeric characters
+	| | ignore_case: whether to convert all alpha characters to lower case
+	|
+	| Output
+	| | distance (type: int)
+	"""
+	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
+
+	# Preprocess text phrase into list of edit units
+	if grain == "char":
+		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	else:
+		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	len_1, len_2 = len(l_1), len(l_2)
+
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+
+	# Raise exception two lists have different length
+	if len_1 != len_2: raise Exception("Can't calculate hamming distance between phrases of different lengths")
+
+	# Calculate hamming distance
+	distance = 0
+	for x, y in zip(l_1, l_2): distance += (1 if x != y else 0)
+
+	return distance
+
+@input_validator(str, str)
+def hamming_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+	"""
+	Get Hamming similarity between two text phrases
+	|
+	| Formula
+	| | 1 - (Hamming distance / longest length among two)
+	|
+	| Argument
+	| | phrase_1, phrase_2: text phrases to compare
+	|
+	| Parameter
+	| | grain: "char" or "word", grain for edit
+	|
+	| Parameter for preprocessing
+	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
+	| | ignore_space: whether to remove all spaces
+	| | ignore_numeric: whether to remove all numeric characters
+	| | ignore_case: whether to convert all alpha characters to lower case
+	|
+	| Output
+	| | distance (type: int)
+	"""
+	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
+
+	# Preprocess text phrase into list of edit units
+	if grain == "char":
+		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	else:
+		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	len_1, len_2 = len(l_1), len(l_2)
+
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+
+	# Raise exception two lists have different length
+	if len_1 != len_2: raise Exception("Can't calculate hamming distance between phrases of different lengths")
+
+	# Calculate hamming distance
+	distance = 0
+	for x, y in zip(l_1, l_2): distance += (1 if x != y else 0)
+
+	similarity = 1 - distance/len_1
 
 	return similarity

@@ -27,6 +27,7 @@ class pytextdist_test(parametrizedTestCase):
 
 	def test_edit_distance(self):
 		self.assertEqual(pytextdist.edit_distance.levenshtein_distance(self.kwargs["phrase_1"], self.kwargs["phrase_2"]), self.kwargs["lev_d"])
+		self.assertEqual(pytextdist.edit_distance.hamming_distance(self.kwargs["phrase_1"], self.kwargs["phrase_2"]), self.kwargs["h_d"])
 		self.assertEqual(pytextdist.edit_distance.lcs_distance(self.kwargs["phrase_1"], self.kwargs["phrase_2"]), self.kwargs["lcs_d"])	
 		self.assertEqual(pytextdist.edit_distance.damerau_levenshtein_distance(self.kwargs["phrase_1"], self.kwargs["phrase_2"]), self.kwargs["d_lev_d"])
 		self.assertEqual(round(pytextdist.edit_distance.jaro_similarity(self.kwargs["phrase_1"], self.kwargs["phrase_2"]),2), self.kwargs["d_jaro"])
@@ -41,6 +42,7 @@ test_cases = [
 		"phrase_1": "bededqowd",
 		"phrase_2": "beeddqpdw",
 		"lev_d": 5,
+		"h_d": 5,
 		"lcs_d": 6,
 		"d_lev_d": 3,
 		"d_jaro": 0.84,
