@@ -54,3 +54,36 @@ def sentence_preprocessing(sentence, ignore_non_alnumspc=True, ignore_numeric=Tr
 		)
 	)
 	return l_words
+
+def phrase_preprocessing(phrase, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+	"""
+	Function for preprocessing given phrase
+	|
+	| Argument
+	| | phrase: a string to be processed 
+	|
+	| Parameter
+	| | grain: character or word
+	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
+	| | ignore_space: whether to remove all spaces
+	| | ignore_numeric: whether to remove all numeric characters
+	| | ignore_case: whether to convert all alpha characters to lower case
+	|
+	| Output
+	| | list of strings (type: list[str])
+	"""
+	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
+	if grain == "char": 
+		return list(word_preprocessing(phrase, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space))
+	else:
+		return sentence_preprocessing(phrase, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+
+
+
+
+
+
+
+
+
+

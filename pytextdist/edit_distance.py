@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from .input_validator import input_validator
-from .preprocessing import word_preprocessing, sentence_preprocessing
+from .preprocessing import phrase_preprocessing
 
 @input_validator(str, str)
 def levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
@@ -28,15 +28,9 @@ def levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=T
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -78,15 +72,9 @@ def levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc
 	| Output
 	| | similarity (type: float)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -127,15 +115,9 @@ def lcs_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ign
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -178,15 +160,9 @@ def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, i
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -228,15 +204,9 @@ def damerau_levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_al
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -282,15 +252,9 @@ def damerau_levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_
 	| Output
 	| | similarity (type: float)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -335,16 +299,13 @@ def jaro_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, 
 	| Output
 	| | similarity (type: float)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
+
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return 1
 
 	# Search for match
 	search_step = max(max(len_1, len_2)//2-1, 0)
@@ -393,18 +354,16 @@ def jaro_winkler_similarity(phrase_1, phrase_2, p=0.1, grain="char", ignore_non_
 	| Output
 	| | similarity (type: float)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
 	assert 0 < p < 0.25, "".format(p)
 
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
+	# Early exit if one of the lists is empty
+	if len_1 == 0 or len_2 == 0: return 1
+	
 	# Search for match
 	search_step = max(max(len_1, len_2)//2-1, 0)
 	match_cnt = 0
@@ -461,15 +420,9 @@ def hamming_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True,
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
@@ -507,15 +460,9 @@ def hamming_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=Tru
 	| Output
 	| | distance (type: int)
 	"""
-	assert grain in ("char", "word"), "Illegal grain input: {}".format(grain)
-
 	# Preprocess text phrase into list of edit units
-	if grain == "char":
-		l_1 = word_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-		l_2 = word_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
-	else:
-		l_1 = sentence_preprocessing(phrase_1, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
-		l_2 = sentence_preprocessing(phrase_2, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+	l_1 = phrase_preprocessing(phrase_1, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
+	l_2 = phrase_preprocessing(phrase_2, grain=grain, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space)
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
