@@ -10,7 +10,7 @@ A python implementation of a variety of text distance and similarity metrics.
 
 ## Install
 
-Requirements: `py>=3.3`, `pyyaml>=5.1.2`
+Requirements: `py>=3.3`, `pyyaml>=5.1,<=5.2`
 
 Install Command: `pip install pytextdist`
 
