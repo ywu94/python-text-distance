@@ -1,7 +1,7 @@
 # python-text-distance
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) 
-[![Generic badge](https://img.shields.io/badge/pypi%20package-0.1.1-blue.svg)](https://pypi.org/project/pytextdist/)
+[![Generic badge](https://img.shields.io/badge/pypi%20package-0.1.2-blue.svg)](https://pypi.org/project/pytextdist/)
 [![Build Status](https://travis-ci.com/ywu94/python-text-distance.svg?branch=master)](https://travis-ci.com/ywu94/python-text-distance)
 
 A python implementation of a variety of text distance and similarity metrics.
