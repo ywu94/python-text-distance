@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
 	name="pytextdist",
-	version="0.1.2",
+	version="0.1.3",
 	author="Yifan Wu",
 	author_email="yw693@cornell.edu",
 	description="A python implementation of a variety of text distance and similarity metrics.",

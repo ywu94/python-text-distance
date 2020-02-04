@@ -5,6 +5,10 @@ from __future__ import print_function
 import logging
 logger = logging.getLogger(__name__)
 
+from collections import Counter
+
+from .input_validator import input_validator
+
 def word_preprocessing(word, ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
 	"""
 	Function for word preprocessing
@@ -77,6 +81,50 @@ def phrase_preprocessing(phrase, grain="char", ignore_non_alnumspc=True, ignore_
 		return list(word_preprocessing(phrase, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case, ignore_space=ignore_space))
 	else:
 		return sentence_preprocessing(phrase, ignore_non_alnumspc=ignore_non_alnumspc, ignore_numeric=ignore_numeric, ignore_case=ignore_case)
+
+@input_validator(list, n=int)
+def ngram_counter(list_of_token, n=2):
+	"""
+	Function for converting a list of ordered tokens into n-grams.
+	| Argument
+	| | list_of_token: a list of ordered tokens to be processed.
+	| 
+	| Parameter
+	| | n: number of continuous tokens to group
+	|
+	| Output
+	| | dictionary of count of ngrams (type: collections.Counter)
+	"""
+	if len(list_of_token) < n: raise Exception("Can't get {}-gram from input of length {}".format(n, len(list_of_token)))
+	ngram_cnt = Counter([' '.join(list_of_token[index:index+n]) for index in range(len(list_of_token)-n+1)])
+	return ngram_cnt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

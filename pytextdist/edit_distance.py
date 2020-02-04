@@ -21,7 +21,7 @@ def levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=T
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -65,7 +65,7 @@ def levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -108,7 +108,7 @@ def lcs_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, ign
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -153,7 +153,7 @@ def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, i
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -197,7 +197,7 @@ def damerau_levenshtein_distance(phrase_1, phrase_2, grain="char", ignore_non_al
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -245,7 +245,7 @@ def damerau_levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -292,7 +292,7 @@ def jaro_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, 
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -347,7 +347,7 @@ def jaro_winkler_similarity(phrase_1, phrase_2, p=0.1, grain="char", ignore_non_
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -413,7 +413,7 @@ def hamming_distance(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True,
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|
@@ -453,7 +453,7 @@ def hamming_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=Tru
 	|
 	| Parameter for preprocessing
 	| | ignore_non_alnumspc: whether to remove all non alpha/numeric/space characters
-	| | ignore_space: whether to remove all spaces
+	| | ignore_space: whether to remove all spaces if grain is character
 	| | ignore_numeric: whether to remove all numeric characters
 	| | ignore_case: whether to convert all alpha characters to lower case
 	|

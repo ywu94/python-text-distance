@@ -33,6 +33,12 @@ class pytextdist_test(parametrizedTestCase):
 		self.assertEqual(round(pytextdist.edit_distance.jaro_similarity(self.kwargs["phrase_1"], self.kwargs["phrase_2"]),2), self.kwargs["d_jaro"])
 		self.assertEqual(round(pytextdist.edit_distance.jaro_winkler_similarity(self.kwargs["phrase_1"], self.kwargs["phrase_2"]),2), self.kwargs["d_jaro_wi"])
 
+	def test_vector_similarity(self):
+		self.assertEqual(round(pytextdist.vector_similarity.cosine_similarity(self.kwargs["sentence_1"], self.kwargs["sentence_2"]), 2), self.kwargs["cos_s"])
+		self.assertEqual(round(pytextdist.vector_similarity.jaccard_similarity(self.kwargs["sentence_1"], self.kwargs["sentence_2"]), 2), self.kwargs["jac_s"])
+		self.assertEqual(round(pytextdist.vector_similarity.sorensen_dice_similarity(self.kwargs["sentence_1"], self.kwargs["sentence_2"]), 2), self.kwargs["sor_s"])
+		self.assertEqual(round(pytextdist.vector_similarity.qgram_similarity(self.kwargs["sentence_1"], self.kwargs["sentence_2"]), 2), self.kwargs["qgr_s"])
+
 
 test_cases = [
 	{
@@ -46,7 +52,34 @@ test_cases = [
 		"lcs_d": 6,
 		"d_lev_d": 3,
 		"d_jaro": 0.84,
-		"d_jaro_wi": 0.87
+		"d_jaro_wi": 0.87,
+		"sentence_1": "For Paperwork Reduction Act Notice, see your tax return instructions. For Paperwork Reduction Act Notice, see your tax return instructions.",
+		"sentence_2": "For Disclosure, Privacy Act, and Paperwork Reduction Act Notice, see separate instructions. Form 1040",
+		"cos_s": 0.38,
+		"jac_s": 0.22,
+		"sor_s": 0.36,
+		"qgr_s": 0.15,
+
+	},
+	{
+		"preprocess_q": "They have 5 length-2 common subsequences: (AB), (AC), (AD), (BD), and (CD)",
+		"word_preprocess_ans": "theyhavelengthcommonsubsequencesabacadbdandcd",
+		"sentence_preprocess_ans": ["they","have","length","common","subsequences","ab","ac","ad","bd","and","cd"],
+		"phrase_1": "bededqowd",
+		"phrase_2": "bededqowd",
+		"lev_d": 0,
+		"h_d": 0,
+		"lcs_d": 0,
+		"d_lev_d": 0,
+		"d_jaro": 1.0,
+		"d_jaro_wi": 1.0,
+		"sentence_1": "For Disclosure, Privacy Act, and Paperwork Reduction Act Notice, see separate instructions. Form 1040",
+		"sentence_2": "For Disclosure, Privacy Act, and Paperwork Reduction Act Notice, see separate instructions. Form 1040",
+		"cos_s": 1.0,
+		"jac_s": 1.0,
+		"sor_s": 1.0,
+		"qgr_s": 1.0,
+
 	},
 ]
 

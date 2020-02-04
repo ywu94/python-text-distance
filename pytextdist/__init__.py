@@ -14,6 +14,8 @@ from . import input_validator
 importlib.reload(input_validator)
 from . import edit_distance 
 importlib.reload(edit_distance)
+from . import vector_similarity
+importlib.reload(vector_similarity)
 
 """
 Set up logging

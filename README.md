@@ -1,7 +1,7 @@
 # python-text-distance
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) 
-[![Generic badge](https://img.shields.io/badge/pypi%20package-0.1.2-blue.svg)](https://pypi.org/project/pytextdist/)
+[![Generic badge](https://img.shields.io/badge/pypi%20package-0.1.3-blue.svg)](https://pypi.org/project/pytextdist/)
 [![Build Status](https://travis-ci.com/ywu94/python-text-distance.svg?branch=master)](https://travis-ci.com/ywu94/python-text-distance)
 
 A python implementation of a variety of text distance and similarity metrics.
@@ -31,4 +31,14 @@ All edit distances listed in [Edit Distance on Wikipedia](https://en.wikipedia.o
 > **[Hamming Distance](https://en.wikipedia.org/wiki/Hamming_distance)**: edit with substition
 
 > **[Jaro & Jaro-Winkler Similarity](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance)**: edit with transposition
+
+### Vector Similarity
+
+> **[Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity)**
+
+> **[Jaccard Similarity](https://en.wikipedia.org/wiki/Jaccard_index)**
+
+> **[Sorensen Dice Similarity](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)**
+
+> **[Q-Grams Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
 
