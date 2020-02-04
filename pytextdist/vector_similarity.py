@@ -10,7 +10,7 @@ from .input_validator import input_validator
 from .preprocessing import phrase_preprocessing, ngram_counter
 
 @input_validator(str, str, n=int)
-def cosine_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+def cosine_similarity(phrase_1, phrase_2, n=1, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
 	"""
 	Get cosine similarity between two text phrases
 	|
@@ -42,7 +42,7 @@ def cosine_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumspc
 	return similarity
 
 @input_validator(str, str, n=int)
-def jaccard_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+def jaccard_similarity(phrase_1, phrase_2, n=1, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
 	"""
 	Get jaccard similarity between two text phrases
 	|
@@ -76,7 +76,7 @@ def jaccard_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumsp
 	return similarity
 
 @input_validator(str, str, n=int)
-def sorensen_dice_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+def sorensen_dice_similarity(phrase_1, phrase_2, n=1, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
 	"""
 	Get Sorense Dice similarity between two text phrases
 	|
@@ -110,7 +110,7 @@ def sorensen_dice_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_a
 	return similarity
 
 @input_validator(str, str, n=int)
-def qgram_similarity(phrase_1, phrase_2, n=2, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
+def qgram_similarity(phrase_1, phrase_2, n=1, grain="word", ignore_non_alnumspc=True, ignore_space=True, ignore_numeric=True, ignore_case=True):
 	"""
 	Get Q-Gram similarity between two text phrases
 	|
