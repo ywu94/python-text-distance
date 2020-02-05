@@ -133,7 +133,7 @@ print(f"Jaro Similarity:{simi_j:.2f}\nJaro-Winkler Similarity:{simi_jw:.2f}")
 By default functions in this module use unigram (single word) to build vectors and calculate similarity. You can change `n` to other numbers for n-gram (n contiguous words) vector similarity. 
 
 <a id='cos_sim'></a>
-> **[Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity)**
+**[Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity)**
 
 ```python
 from pytextdist.vector_similarity import cosine_similarity
@@ -149,7 +149,7 @@ print(f"Unigram Cosine Similarity:{simi_1:.2f}\nBigram Cosine Similarity:{simi_2
 ```
 
 <a id='jac_sim'></a>
-> **[Jaccard Similarity](https://en.wikipedia.org/wiki/Jaccard_index)**
+**[Jaccard Similarity](https://en.wikipedia.org/wiki/Jaccard_index)**
 
 ```python
 from pytextdist.vector_similarity import jaccard_similarity
@@ -165,7 +165,7 @@ print(f"Unigram Jaccard Similarity:{simi_1:.2f}\nBigram Jaccard Similarity:{simi
 ```
 
 <a id='sor_sim'></a>
-> **[Sorensen Dice Similarity](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)**
+**[Sorensen Dice Similarity](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)**
 
 ```python
 from pytextdist.vector_similarity import sorensen_dice_similarity
@@ -181,7 +181,7 @@ print(f"Unigram Sorensen Dice Similarity:{simi_1:.2f}\nBigram Sorensen Dice Simi
 ```
 
 <a id='qgr_sim'></a>
-> **[Q-Grams Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
+**[Q-Grams Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
 
 ```python
 from pytextdist.vector_similarity import qgram_similarity
@@ -212,10 +212,10 @@ All functions will perform `pytextdist.preprocessing.phrase_preprocessing` to cl
 
    Example:
   ```python
-  import pytextdist
+  from pytextdist.preprocessing import phrase_preprocessing
   
   before = 'AI Top-50'
-  after = pytextdist.preprocessing.phrase_preprocessing(before, grain='char')
+  after = phrase_preprocessing(before, grain='char')
   print(after)
   
   >> ['a', 'i', 't', 'o', 'p']
@@ -231,10 +231,10 @@ All functions will perform `pytextdist.preprocessing.phrase_preprocessing` to cl
    
   Example:
   ```python
-  import pytextdist
+  from pytextdist.preprocessing import phrase_preprocessing
   
   before = 'AI Top-50'
-  after = pytextdist.preprocessing.phrase_preprocessing(before, grain='word')
+  after = phrase_preprocessing(before, grain='word')
   print(after)
 
   >> ['ai', 'top']
@@ -250,14 +250,14 @@ Functions under the vector similarity module will also perform `pytextdist.prepr
    
    Example:
   ```python
-  import pytextdist
+  from pytextdist.preprocessing import phrase_preprocessing, ngram_counter
   
   before = 'AI Top-50 Company'
-  after = pytextdist.preprocessing.phrase_preprocessing(before, grain='word')
+  after = phrase_preprocessing(before, grain='word')
   print(after)
-  ngram_cnt_1 = pytextdist.preprocessing.ngram_counter(after, n=1)
+  ngram_cnt_1 = ngram_counter(after, n=1)
   print(ngram_cnt_1)
-  ngram_cnt_2 = pytextdist.preprocessing.ngram_counter(after, n=2)
+  ngram_cnt_2 = ngram_counter(after, n=2)
   print(ngram_cnt_2)
 
   >> ['ai', 'top', 'company']
