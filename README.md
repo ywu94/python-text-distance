@@ -11,7 +11,16 @@ A python implementation of a variety of text distance and similarity metrics.
 * [How to Use](#use)
 * [Module](#module)
   * [Edit Distance](#edit)
+     * [Levenshtein Distance & Similarity](#lev_dis)
+     * [Longest Common Subsequence Distance & Similarity](#lcs_dis)
+     * [Damerau-Levenshtein Distance & Similarity](#dam_dis)
+     * [Hamming Distance & Similarity](#ham_dis)
+     * [Jaro & Jaro-Winkler Similarity & Similarity](#jaro_dis)
   * [Vector Similarity](#vec)
+     * [Cosine Similarity](#cos_sim)
+     * [Jaccard Similarity](#jac_sim)
+     * [Sorensen Dice Similarity](#sor_sim)
+     * [Q-Grams Similarity](#qgr_sim)
 * [Customize Preprocess](#preprocessing)
 
 ---
@@ -37,25 +46,64 @@ The functions in this package takes two strings as input and return the distance
 <a id='edit'></a>
 ### Edit Distance
 
-> **[Levenshtein Distance](https://en.wikipedia.org/wiki/Levenshtein_distance)**: edit with insertion, deletion, and substitution
+By default functions in this module consider single character as the unit for editting.
 
-> **[Longest Common Subsequence Distance](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)**: edit with insertion and deletion 
+<a id='lev_dis'></a>
+**[Levenshtein Distance & Similarity](https://en.wikipedia.org/wiki/Levenshtein_distance)**: edit with insertion, deletion, and substitution
 
-> **[Damerau-Levenshtein Distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance)**: edit with insertion, deletion, substitution, and transposition of two adjacent units
+```python
+import pytextdist
 
-> **[Hamming Distance](https://en.wikipedia.org/wiki/Hamming_distance)**: edit with substition
+str_a = 'kitten'
+str_b = 'sitting'
+dist = pytextdist.edit_distance.levenshtein_distance(str_a,str_b)
+simi = round(pytextdist.edit_distance.levenshtein_similarity(str_a,str_b),2)
+print(f"Levenshtein Distance:{dist}\nLevenshtein Similarity:{simi}")
 
+>> Levenshtein Distance:3
+>> Levenshtein Similarity:0.57
+```
+<a id='lcs_dis'></a>
+**[Longest Common Subsequence Distance & Similarity](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)**: edit with insertion and deletion 
+
+```python
+import pytextdist
+
+str_a = 'kitten'
+str_b = 'sitting'
+dist = pytextdist.edit_distance.lcs_distance(str_a,str_b)
+simi = round(pytextdist.edit_distance.lcs_similarity(str_a,str_b),2)
+print(f"LCS Distance:{dist}\nLCS Similarity:{simi}")
+
+>> LCS Distance:5
+>> LCS Similarity:0.62
+```
+
+
+<a id='dam_dis'></a>
+> **[Damerau-Levenshtein Distance & Similarity](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance)**: edit with insertion, deletion, substitution, and transposition of two adjacent units
+
+
+<a id='ham_dis'></a>
+> **[Hamming Distance & Similarity](https://en.wikipedia.org/wiki/Hamming_distance)**: edit with substition
+
+
+<a id='jaro_dis'></a>
 > **[Jaro & Jaro-Winkler Similarity](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance)**: edit with transposition
 
 <a id='vec'></a>
 ### Vector Similarity
 
+<a id='cos_sim'></a>
 > **[Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity)**
 
+<a id='jac_sim'></a>
 > **[Jaccard Similarity](https://en.wikipedia.org/wiki/Jaccard_index)**
 
+<a id='sor_sim'></a>
 > **[Sorensen Dice Similarity](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)**
 
+<a id='qgr_sim'></a>
 > **[Q-Grams Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
 
 <a id='preprocessing'></a>
