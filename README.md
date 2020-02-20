@@ -20,7 +20,7 @@ A python implementation of a variety of text distance and similarity metrics.
      * [Cosine Similarity](#cos_sim)
      * [Jaccard Similarity](#jac_sim)
      * [Sorensen Dice Similarity](#sor_sim)
-     * [Q-Grams Similarity](#qgr_sim)
+     * [Q-Gram Similarity](#qgr_sim)
 * [Customize Preprocess](#preprocessing)
 
 ---
@@ -181,7 +181,7 @@ print(f"Unigram Sorensen Dice Similarity:{simi_1:.2f}\nBigram Sorensen Dice Simi
 ```
 
 <a id='qgr_sim'></a>
-**[Q-Grams Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
+**[Q-Gram Similarity](https://www.sciencedirect.com/science/article/pii/0304397592901434)**
 
 ```python
 from pytextdist.vector_similarity import qgram_similarity
