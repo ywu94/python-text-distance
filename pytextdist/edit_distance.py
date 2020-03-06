@@ -78,7 +78,8 @@ def levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return 1
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 
 	# Dynamic programming solver
 	manipulation = [[0 for _ in range(len_2+1)] for _ in range(len_1+1)]
@@ -166,7 +167,8 @@ def lcs_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, i
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 
 	# Dynamic programming solver
 	manipulation = [[0 for _ in range(len_2+1)] for _ in range(len_1+1)]
@@ -258,7 +260,8 @@ def damerau_levenshtein_similarity(phrase_1, phrase_2, grain="char", ignore_non_
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return 1
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 
 	# Dynamic programming solver
 	manipulation = [[0 for _ in range(len_2+1)] for _ in range(len_1+1)]
@@ -305,7 +308,8 @@ def jaro_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=True, 
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return 1
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 
 	# Search for match
 	search_step = max(max(len_1, len_2)//2-1, 0)
@@ -362,7 +366,8 @@ def jaro_winkler_similarity(phrase_1, phrase_2, p=0.1, grain="char", ignore_non_
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return 1
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 	
 	# Search for match
 	search_step = max(max(len_1, len_2)//2-1, 0)
@@ -466,7 +471,8 @@ def hamming_similarity(phrase_1, phrase_2, grain="char", ignore_non_alnumspc=Tru
 	len_1, len_2 = len(l_1), len(l_2)
 
 	# Early exit if one of the lists is empty
-	if len_1 == 0 or len_2 == 0: return max(len_1,len_2)
+	if len_1 == 0 and len_2 == 0: return 1
+	if len_1 == 0 or len_2 == 0: return 0
 
 	# Raise exception two lists have different length
 	if len_1 != len_2: raise Exception("Can't calculate hamming distance between phrases of different lengths")

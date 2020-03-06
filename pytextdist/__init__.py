@@ -4,7 +4,7 @@ import logging.config
 import yaml
 
 __name__ = "pytextdist"
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 import importlib
 
