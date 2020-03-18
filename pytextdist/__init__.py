@@ -31,8 +31,11 @@ logger_config_json_path = value if value else os.path.join(init_file_dir, "loggi
 logger_default_level = logging.INFO
 
 if os.path.exists(logger_config_json_path):
-	with open(logger_config_json_path, "r") as f:
-		config = json.load(f)
+	with open(logger_config_json_path, "rb") as f:
+		try:
+			config = json.load(f)
+		except:
+			config = json.loads(f.read().decode('utf-8'))
 	logging.config.dictConfig(config)
 else:
 	logging.basicConfig(level=logger_default_level)
