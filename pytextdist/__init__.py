@@ -1,6 +1,3 @@
-import os
-import logging
-import logging.config
 
 __name__ = "pytextdist"
 __version__ = "0.1.5"
@@ -17,25 +14,29 @@ from . import vector_similarity
 importlib.reload(vector_similarity)
 
 """
-Set up logging
+Set up logging (Optional)
 | Default logging configuration can be edited in logging.yaml
 | You can also bring customized logging modules.
 """
 
-env_key = "LOG_CFG"
-value = os.getenv(env_key, None)
+# import os
+# import logging
+# import logging.config
 
-init_file_dir = os.path.dirname(os.path.abspath(__file__))
-logger_config_yaml_path = value if value else os.path.join(init_file_dir, "logging.yaml")
-logger_default_level = logging.INFO
+# env_key = "LOG_CFG"
+# value = os.getenv(env_key, None)
 
-try:
-	import yaml
-	if os.path.exists(logger_config_yaml_path):
-		with open(logger_config_yaml_path, "rt") as f:
-			config = yaml.safe_load(f.read())
-		logging.config.dictConfig(config)
-	else:
-		logging.basicConfig(level=logger_default_level)
-except:
-	logging.basicConfig(level=logger_default_level)
+# init_file_dir = os.path.dirname(os.path.abspath(__file__))
+# logger_config_yaml_path = value if value else os.path.join(init_file_dir, "logging.yaml")
+# logger_default_level = logging.INFO
+
+# try:
+# 	import yaml
+# 	if os.path.exists(logger_config_yaml_path):
+# 		with open(logger_config_yaml_path, "rt") as f:
+# 			config = yaml.safe_load(f.read())
+# 		logging.config.dictConfig(config)
+# 	else:
+# 		logging.basicConfig(level=logger_default_level)
+# except:
+# 	logging.basicConfig(level=logger_default_level)
