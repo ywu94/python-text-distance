@@ -1,0 +1,59 @@
+﻿{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "brief": {
+      "format": "%(levelname)-8s %(message)s"
+    },
+    "default": {
+      "format": "%(asctime)s %(levelname)-8s %(name)-8s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    }
+  },
+  "handlers": {
+    "brief_console": {
+      "class": "logging.StreamHandler",
+      "formatter": "brief",
+      "stream": "ext://sys.stdout"
+    },
+    "default_console": {
+      "class": "logging.StreamHandler",
+      "formatter": "default",
+      "stream": "ext://sys.stdout"
+    },
+    "info_file_handler": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "INFO",
+      "formatter": "default",
+      "filename": "info.log",
+      "maxBytes": 10485760,
+      "backupCount": 20,
+      "encoding": "utf8"
+    },
+    "error_file_handler": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "ERROR",
+      "formatter": "default",
+      "filename": "errors.log",
+      "maxBytes": 10485760,
+      "backupCount": 20,
+      "encoding": "utf8"
+    }
+  },
+  "loggers": {
+    "pytextdist.edit_distance": {
+      "level": "INFO",
+      "handlers": [
+        "brief_console"
+      ],
+      "propagate": "no"
+    },
+    "pytextdist.input_validator": {
+      "level": "INFO",
+      "handlers": [
+        "brief_console"
+      ],
+      "propagate": "no"
+    }
+  }
+}

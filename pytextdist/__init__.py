@@ -1,10 +1,10 @@
 import os
 import logging
 import logging.config
-import yaml
+import json
 
 __name__ = "pytextdist"
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 import importlib
 
@@ -19,7 +19,7 @@ importlib.reload(vector_similarity)
 
 """
 Set up logging
-| Default logging configuration can be edited in logging.yaml.
+| Default logging configuration can be edited in logging.json.
 | You can also bring customized logging modules.
 """
 
@@ -27,12 +27,12 @@ env_key = "LOG_CFG"
 value = os.getenv(env_key, None)
 
 init_file_dir = os.path.dirname(os.path.abspath(__file__))
-logger_config_yaml_path = value if value else os.path.join(init_file_dir, "logging.yaml")
+logger_config_json_path = value if value else os.path.join(init_file_dir, "logging.json")
 logger_default_level = logging.INFO
 
-if os.path.exists(logger_config_yaml_path):
-	with open(logger_config_yaml_path, "rt") as f:
-		config = yaml.safe_load(f.read())
+if os.path.exists(logger_config_json_path):
+	with open(logger_config_json_path, "rb") as f:
+		config = json.load(f)
 	logging.config.dictConfig(config)
 else:
 	logging.basicConfig(level=logger_default_level)
