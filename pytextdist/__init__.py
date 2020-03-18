@@ -1,6 +1,14 @@
 
+"""
+pytextdist
+
+Author: Yifan Wu
+Contact: yw693@cornell.edu
+"""
+
+
 __name__ = "pytextdist"
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 
 import importlib
 
@@ -12,31 +20,3 @@ from . import edit_distance
 importlib.reload(edit_distance)
 from . import vector_similarity
 importlib.reload(vector_similarity)
-
-"""
-Set up logging (Optional)
-| Default logging configuration can be edited in logging.yaml
-| You can also bring customized logging modules.
-"""
-
-# import os
-# import logging
-# import logging.config
-
-# env_key = "LOG_CFG"
-# value = os.getenv(env_key, None)
-
-# init_file_dir = os.path.dirname(os.path.abspath(__file__))
-# logger_config_yaml_path = value if value else os.path.join(init_file_dir, "logging.yaml")
-# logger_default_level = logging.INFO
-
-# try:
-# 	import yaml
-# 	if os.path.exists(logger_config_yaml_path):
-# 		with open(logger_config_yaml_path, "rt") as f:
-# 			config = yaml.safe_load(f.read())
-# 		logging.config.dictConfig(config)
-# 	else:
-# 		logging.basicConfig(level=logger_default_level)
-# except:
-# 	logging.basicConfig(level=logger_default_level)
